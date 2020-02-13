@@ -1,0 +1,338 @@
+@charset "utf-8";
+/* CSS Document */
+body{font-family:'微软雅黑', arial, sans-serif; margin:0px; padding:0; font-size:14px; color:#323232; background-color:#fff; }
+body a{outline:none;blr:expression(this.onFocus=this.blur());}
+a{color:#323232; text-decoration:none ;}
+a:hover{ color:#ae8056 !important; text-decoration: none;}
+img{ border:0; margin:0; padding:0; vertical-align:middle ;}
+div,p,ul,ol,li,h1,h2,h3,h4,h5,h6,form,input,select,textarea{ margin:0; padding:0; list-style:none;} 
+.clear{ clear:both; height:0px; line-height:0px; font-size:0; }
+input{ border: none;}
+.clearfix:after{content: ""; display: block;  height: 0;  clear: both;  visibility: hidden;  }
+.clearfix{zoom:1}
+em,i{ font-style:normal;}
+
+.red{ color:#ff0401;}
+.green{ color:#149802;}
+
+
+
+.header{ width: 1000px; height: auto; overflow: hidden; margin: 0 auto;}
+.header .logo{float: left; display: inline; height: 60px; line-height: 60px;}
+.header .logo img{vertical-align: middle;}
+.header .logo span{ font-size: 20px; padding-left: 10px; display: inline-block;}
+
+.header .header_meun{ float: right; display: inline; margin-top: 20px; }
+.header .header_meun a{ padding: 0 10px; height: 15px; line-height: 15px; display: inline-block; 
+                border-left: 1px solid #d0d0d0;}
+                
+.header .ad_img01{ width: 1000px; height: 90px; overflow: hidden;}
+
+.nav{ width: 100%; height: 50px; overflow: hidden; background: url(http://img.inv.org.cn/ir/site/pc/nav_bg.jpg) repeat-x;}
+.nav ul{ width: 1000px; height: 50px; margin: 0 auto;}
+.nav ul li{ float: left; display: inline-block; font-size: 18px; line-height: 50px; 
+            width: 80px; text-align: center; margin: 0 30px 0 0;}
+.nav ul li.nav_current{ border-bottom: 3px solid #ae8056; height: 48px;}
+
+
+
+.main{ width: 1000px; height: auto; margin: 0 auto; padding-top: 20px;}
+.m_Left{width: 680px; height: auto; float: left; display: inline;}
+
+.column01{ width: 100%; height: auto; padding-bottom: 20px;}
+.tit{ width: 100%; height: 26px; background: url(http://img.inv.org.cn/ir/site/pc/tit_bg.png) repeat-x;
+         overflow: hidden; line-height: 26px; margin-bottom: 10px;}
+.tit h2{ font-size: 22px; color: #ae8056; float: left; display: inline-block; background-color: #fff;
+        padding-right: 25px; font-weight: normal;}
+.tit span{ float: right; display: inline-block; background: url(http://img.inv.org.cn/ir/site/pc/icon01.png) no-repeat right 8px;
+        padding:0 20px 0 15px; background-color: #fff;}
+
+.k_line{ width: 400px; height: 250px; border:1px solid #c9c9c9; float: left; display: inline;}
+.column01_tab01{width: 260px; height: auto; float: right; display: inline; }
+.column01_tab01 table{ width:100%; height:auto;  border-left:1px solid #c9c9c9;
+                  border-bottom:1px solid #c9c9c9;}
+.column01_tab01 table td{ height:22px; line-height:22px; vertical-align:middle;  text-align:center;
+                         border-top:1px solid #c9c9c9; border-right:1px solid #c9c9c9; font-size: 14px; } 
+.column01_tab01 table td p{ color: #777;}
+
+.column01_tab02{width: 100%; height: auto; float: right; display: inline; margin-top:15px; }
+.column01_tab02 table{ width:100%; height:auto;  border-left:1px solid #c9c9c9;
+                  border-bottom:1px solid #c9c9c9;}
+.column01_tab02 table td{ height:22px; line-height:22px; vertical-align:middle;  text-align:center;
+                         border-top:1px solid #c9c9c9; border-right:1px solid #c9c9c9; font-size: 14px; } 
+.column01_tab02 table td p{ color: #777;}
+
+.shaXin{ clear: both; width: 100%; height: 35px; line-height: 35px; overflow: hidden; padding-top: 15px;}
+.shaXin p{ display: inline-block; font-size: 16px; padding-right: 20px;}
+.shaXin input{ width: 87px; height: 35px; background:url(http://img.inv.org.cn/ir/site/pc/btn01.png)no-repeat; color: #fff;
+           font-size: 16px; cursor: pointer;}
+
+
+.column02{width: 100%; height: auto; padding-bottom: 20px;}
+.column02 ul{ width: 100%; height: auto;}
+.column02 ul li{ height: 34px; line-height: 34px; overflow: hidden; vertical-align: middle;
+             font-size: 16px; background: url(http://img.inv.org.cn/ir/site/pc/list_bg.png)no-repeat 0 16px; padding-left: 10px;}
+.column02 ul li span{ color: #777; float: right; font-size: 14px;}
+
+
+
+
+.m_Right{width: 300px; height: auto; float: right; display: inline;}
+.ewm{ margin-bottom: 15px; width: 298px; height: 278px; border:1px solid #d0d0d0; text-align: center;}
+.ad_img02{ margin-bottom: 15px; width: auto; height: auto;}
+
+
+.SoSO{ width:250px; height:30px;   margin-top:15px; background: url(http://img.inv.org.cn/ir/site/pc/soso_bg.png) no-repeat; }
+div.select-main {
+	font-size:14px;
+	height:28px;
+	position:relative;
+	width:77px;
+	float: left;
+	display: inline;
+	margin-left: 1px;
+	margin-top: 1px;
+	
+	-webkit-user-select:none; /* webkit (safari, chrome) browsers */
+    -moz-user-select:none; /* mozilla browsers */
+    -khtml-user-select:none; /* webkit (konqueror) browsers */
+    -ms-user-select:none; /* IE10+ */
+}
+
+div.select-main.z-index {
+	z-index:10;
+}
+
+div.select-main.disabled {
+	cursor:default;
+	filter:alpha(opacity=50);
+	opacity:0.5;
+	zoom:1;
+}
+
+div.select-main.disabled div.select-set {
+	cursor:default;
+}
+
+div.select-main.disabled div.select-arrow {
+	cursor:default;
+}
+
+div.select-set {
+	background-color:#FFFFFF;
+	cursor:pointer;
+	height:28px;
+	line-height:28px;
+	overflow:hidden;
+	position:relative;
+	width:77px;
+	z-index:5;
+	text-indent: 10px;
+}
+
+div.select-arrow {
+    background: url(http://img.inv.org.cn/ir/site/pc/icon17.png) no-repeat;
+	cursor:pointer;
+	height:6px;
+	position:absolute;
+	top:12px;
+	right:10px;
+	width:9px;
+	z-index:7;
+}
+
+div.select-arrow.reverse {
+    background: url(http://img.inv.org.cn/ir/site/pc/icon18.png) no-repeat;
+}
+
+div.select-block {
+	background-color:#FFFFFF;
+    border:1px solid #dddddd;
+    line-height:20px;
+    position:absolute;
+    left: -1px;
+    width:77px;
+}
+
+ul.select-list {
+	cursor:pointer;
+	margin:0;
+}
+
+/* Scroll view */
+
+ul.select-list::-webkit-scrollbar {
+    width:12px;
+}
+
+ul.select-list::-webkit-scrollbar-track {
+    border-radius:10px;
+}
+
+ul.select-list::-webkit-scrollbar-thumb {
+    border-radius:10px;
+    -webkit-box-shadow:inset 0 0 1px rgba(0,0,0,0.5);
+}
+
+ul.select-list {
+	scrollbar-face-color:#AEB1B1;
+    scrollbar-shadow-color:#C7CACA;
+    scrollbar-highlight-color:#CED1D1;
+    scrollbar-3dlight-color:#CED1D1;
+    scrollbar-darkshadow-color:#C7CACA;
+    scrollbar-track-color:#CED1D1;
+    scrollbar-arrow-color:#333;
+}
+
+/* End scroll view */
+
+li.select-items {
+	color:#333333;
+	padding:7px 15px;
+}
+
+li.select-items:hover,
+li.select-items.active {
+	background-color:#ee7a09;
+	color:#FFFFFF;
+} 
+
+
+.Search{ width:172px; height:30px; overflow:hidden; float:left; display:inline; }
+
+.Search .So_tex{ width:138px; height:28px; line-height:28px; overflow:hidden;  float:left; display:inline;
+                       margin-top: 1px; margin-left: 1px; text-indent: 10px;
+                 color:#777; border:0px;}
+.Search .So_bnt{ font-size:16px; color:#fff; border:0px;  width:33px; height:30px; background:none; cursor:pointer; float:left; display:inline;  }
+
+.bottom_ad{ width:1000px; height:90px; margin: 0 auto; padding:20px 0; clear: both; }
+
+.footer{ border-top:1px solid #e1e1e1; width: 100%; height: auto; text-align: center; font-size: 14px;}
+.footer a{ padding: 20px 10px 10px; display: inline-block;}
+.footer p{ padding: 10px;}
+.footer p a{ padding: 0px 0px;}
+
+/*行情页面*/
+.tit_cutover{ width: 100%; height: 35px; overflow: hidden; background: url(http://img.inv.org.cn/ir/site/pc/bg01.png) repeat-x; margin-bottom: 20px; }
+.tit_cutover li{ float: left; display: inline; color: #6a7179; font-size: 16px; width: 100px; text-align: center; height: 35px;}
+.tit_cutover li.tit_cutover_cur{ background: url(http://img.inv.org.cn/ir/site/pc/bg02.png) no-repeat 0 29px; color: #ae8056;}
+
+.history_Price_k{ width: 680px; height: 290px;}
+
+
+.jiaoyian{ clear: both; width: 100%; height: 38px; line-height: 38px; overflow: hidden; padding-top: 15px;}
+.jiaoyian span{ display: inline-block; font-size: 16px;}
+.jiaoyian input[type=text]{ width: 110px; height: 32px; line-height: 32px; border: 1px solid #ae8056; border-radius:5px;}
+.jiaoyian input[type=button]{ width: 60px; height: 32px;  color: #fff; font-size: 16px; cursor: pointer; border-radius:5px; background-color: #ae8056; margin-left: 5px;}
+.jiaoyian input[type=submit]{ width: 60px; height: 32px;  color: #fff; font-size: 16px; cursor: pointer; border-radius:5px; background-color: #ae8056; margin-left: 5px;}
+
+.page{ margin:30px 0; height:36px; line-height:36px; }
+.page b span{ height:34px;  width:34px;  border:1px solid #d8dadf; 
+             text-align:center; background-color:#fff; padding:8px 12px;}
+.page .current{background-color: #ee7a09; color: #fff;}
+.page a{ height:34px;  width:34px;  border:1px solid #d8dadf; padding:8px 12px;
+             text-align:center; background-color:#fff; margin-left:5px;}
+.page .page_c{ width:72px; background-color:#f8f8f8;}
+
+
+
+.con_list_tex{ width: 100%; height: auto;}
+.con_list_tex h1{ font-size: 26px; font-weight: normal; padding: 20px 0 10px 0; text-align: center;}
+.con_list_tex em{font-size: 14px; color: #777; width: 100%; height: auto; display: block; 
+                   border-bottom: 1px dotted #c7c7c7; padding: 10px 0; text-align: center;}
+.con_list_tex p{ font-size: 16px; line-height: 32px; text-indent: 0em; padding: 15px 0;}
+
+.pdf_link{ width: 100%; height:40px; line-height: 40px; overflow: hidden; color: #ee7a09; font-size: 18px;
+            text-align: center; border-bottom: 1px solid #e1e1e1; padding-bottom: 10px;}
+.pdf_link a{ color:#ee7a09;}
+.pdf_link img{ margin-right: 10px;}
+
+
+.company_overview table td{ text-align: left; padding-left: 15px;}
+
+.management_team{ width: 100%; height: auto;}
+.management_team_tex{ width: 100%; height: auto; border-bottom: 1px dotted #e8e8e8; padding-bottom: 10px; margin-bottom: 20px;}
+.management_team_tex span{ display: inline-block; width: 130px; height: 160px; float:left; margin-right: 25px;}
+.management_team_tex span img{ width: 130px; height: 160px; }
+.management_team_tex h3{font-size: 20px; height: 26px; line-height: 26px; overflow: hidden;}
+.management_team_tex h3 i{ font-weight: normal; color: #777; padding-left: 30px;}
+.management_team_tex p{ font-size: 16px; line-height: 30px; padding: 10px 0; text-indent: 2em;}
+
+
+.page_cutover{ width: 100%; height: 18px; line-height: 18px; overflow: hidden; font-size: 14px; text-align: center; padding:0 0 15px 0;}
+.page_cutover span{ padding: 0 20px;}
+.page_cutover span img{ margin-right: 0px;}
+
+.column01_tab02 table td p a{ color: #0c3280;}
+
+
+.kx01{ width: 100%; height: auto; text-align: center;}
+.kx01 img{ width: auto; height: auto;}
+
+.sel_form{width: 100%; height: 30px; line-height: 30px; text-align: center; padding-top: 10px;}
+.sel_form span{ padding: 0 20px;}
+.sel_form input{ vertical-align: middle; margin-right: 10px;}
+
+
+.column01_tab02 h4{ font-size: 20px; width: 100%; height: auto; text-align: center; font-weight: normal; padding: 10px 0 20px;}
+
+
+
+
+/*影音中心*/
+.av_title{ width: 1000px; height: 50px;  margin: 0 auto; overflow: hidden; background: url(http://img.inv.org.cn/ir/site/pc/nav_bg.jpg) repeat-x;}
+.av_title span{ float: left; display: inline-block; font-size: 18px; line-height: 50px; width: 80px; text-align: center; margin: 0 30px 0 0;
+                 border-bottom: 3px solid #ae8056; height: 48px; font-weight: normal;}
+
+.av_list{width: 100%; height: auto; clear: both; }
+.av_list ul{ width: 100%; height: auto;}
+.av_list ul li{ width: 200px; height: 200px; float: left; display: inline; margin: 10px;}
+.av_list ul li div{ width: 200px; height: 150px; position: relative;}
+.av_list ul li div span{width: 200px; height: 150px; position: absolute; top:0px; left:0px; z-index: 1;}
+.av_list ul li div em{ width: 50px; height: 30px; background: #333333; color: #fff; text-align: center; border-radius: 5px;
+                     line-height: 30px; z-index: 10; display: block; position: absolute; bottom: 5px; right: 5px;}
+.av_list ul li h4{ height: 50px; width: 100%; overflow: hidden; line-height:22px; font-weight: normal; padding-top: 5px;}
+
+
+
+.av_text_Video{ width: 400px; height: 350px; margin: 0 auto; text-align: center;padding-top: 30px;}
+.av_text_Video h4{font-weight: normal; font-size: 16px; padding-top: 10px;}
+
+
+/*问答*/
+.QA_switch{width: 100%; height: 32px; line-height: 30px; overflow: hidden;}
+.QA_switch ul{ width: 400px; height: 30px; border:1px solid #ae8056; border-right: 0;}
+.QA_switch ul li{ float: left; width: 99px; float: left; text-align: center; border-right:1px solid #ae8056;}
+.QA_switch .QA_switch_current{ background-color:#bd9876; color: #fff;}
+
+.QA_form{width: 100%; height: 132px; padding-top: 20px;}
+.QA_form .QA_form_textarea{ width: 510px; height: 130px; float: left; border:1px solid #ccc;}
+.QA_form_01{ width: 200px; float: right;}
+
+.QA_form_01 select{ width: 200px; border: 1px solid #ccc;}
+.QA_form_01 span{ width: 100%; height: 35px; display: block; padding-top: 10px;}
+.QA_form_01 span input{width: 90px; height: 35px; border: 1px solid #ccc; text-indent:10px;}
+.QA_form_01 span img{width: 100px; height: 35px; border: 1px solid #ccc; margin-left: 5px;}
+.QA_form_01 .QA_form_btn{ width: 100px; height: 40px; background-color: #ae8056; border-radius: 5px; color: #fff;
+           font-size: 16px; margin-top: 20px;}
+
+
+.QA_list{ width: 100%; height: auto; padding-top: 10px;}
+.QA_list ul{ width: 100%; height: auto;}
+.QA_list ul li{ width: 100%; height: auto; border-bottom: 1px solid #e3e3e3; clear: both; padding-bottom: 15px; padding-top: 10px;}
+.QA_list ul li div{ width: 100%; height: auto; padding: 5px 0;}
+.QA_list ul li div .QA_list_icon01{ width: 24px; height: 32px; display: inline-block; float: left; margin-right: 10px;
+                    background: url((http://img.inv.org.cn/ir/site/pc/qa_img02.jpg) no-repeat;}
+.QA_list ul li div p{ font-size: 14px; color: #333; width:696px; float: left; line-height:26px;}
+.QA_list ul li div p em{ color: #777;}
+.QA_list ul li div .QA_list_icon02{ width: 24px; height: 32px; display: inline-block; float: left; margin-right: 10px;
+                    background: url((http://img.inv.org.cn/ir/site/pc/qa_img03.jpg) no-repeat;}
+                    
+/*邮件*/
+.mail{ width: 100%; height: auto;}
+.mail p{font-size: 14px; line-height: 28px; padding-bottom: 10px;}
+.mail span{ display: block; padding-top: 10px;}
+.mail .mail_Input_tex{ width: 260px; height: 40px; line-height: 40px; border: 1px solid #ae8056; text-indent: 5px; color: #777;}
+.mail .mail_btn{ width: 100px; height: 40px; background-color: #ae8056; border-radius: 5px; color: #fff;
+           font-size: 16px; margin-top: 10px;}
+.mail .mail_Input_checkbox{ margin-right: 10px;}
