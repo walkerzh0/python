@@ -19,8 +19,7 @@ class LogTool:
         idx = 0
         for idx in range(4):
             ret = result.readline()
-            #print('lkl ', ret)
-            cmd = "adb pull " + ret.strip() + se                                                        lf.logs_saved_path
+            cmd = "adb pull " #+ ret.strip() + " " + self.logs_saved_path   # 此句如果adb端口不在就会报错                                                        lf.logs_saved_path
             self.mOs.popen(cmd)
 
         self.open_dir(self.logs_saved_path)
@@ -108,12 +107,14 @@ class CmdManager:
         for cmd in self.itwalk_cmdlist:
             print(cmd)
 
+# test pass
 #mCmdManager = CmdManager()
 #cmd_input = input('请输入命令：')
 #mCmdManager.handler(cmd_input)
 
-logtool = LogTool()
-logtool.get_kernel_log()
+# test pass
+# logtool = LogTool()
+# logtool.get_kernel_log()
 
 
 # mLogTool = LogTool()
@@ -123,3 +124,39 @@ logtool.get_kernel_log()
 
 # mLogTool.open_txtfile(path + filename)
 # mLogTool.open_dir(path)
+
+from pathlib import Path
+class Monitor:
+    def __init__(self, mornitorpoint):
+        self.mornitorpoint = mornitorpoint
+
+    def download(self):
+        pass
+
+    def timer(self):
+        pass
+
+    def taskbuild(self):
+        mornitorpoint = self.mornitorpoint
+        buildtask = mornitorpoint + 'buildtask\\'
+        downloadtask = mornitorpoint + 'download\\'
+        status_file = 'okay.txt'
+        notified = False
+        mornitor = Path(mornitorpoint)
+        while True:
+            time.sleep(3)
+            if mornitor.exists():
+                print(mornitorpoint, 'exsit')
+                build = Path(buildtask)
+                if build.exists():
+                    print(build, 'exsit')
+                    status = Path(buildtask + status_file)
+                    if status.exists():
+                        print(build, 'complete')
+                        if notified == False:
+                            os.popen('notepad ' + buildtask + status_file)
+                            notified = True
+
+#test pass
+mMonitor = Monitor('G:\Workspaces\python\prjs\dir\mornitorpoint\\')
+mMonitor.taskbuild()
