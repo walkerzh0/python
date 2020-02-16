@@ -126,19 +126,95 @@ class CmdManager:
 # mLogTool.open_dir(path)
 
 from pathlib import Path
+
+class Tasks:
+    def __init__(self, name, mornitorpoint):
+        self.name = name
+        self.location = mornitorpoint + name
+        self.tasks = []
+
+    def list_task(self):
+        pass
+
+    def check_task(self):
+        pass
+
+    def notify(self, info):
+        pass
+
+class TimerTasks(Tasks):
+    def __init__(self, mornitorpoint):
+        super().__init__('timertasks', mornitorpoint)
+
+    def list_task(self):
+        print('list_task', self.location)
+
+    def check_task(self):
+        print('check_task', self.location)
+
+    def notify(self, info):
+        print('notify', info)
+
+
+class BuildTasks(Tasks):
+    def __init__(self, mornitorpoint):
+        super().__init__('buildtasks', mornitorpoint)
+
+    def list_task(self):
+        print('list_task', self.location)
+        #ts = os.listdir(self.location)
+
+    def check_task(self):
+        print('check_task', self.location)
+
+    def notify(self, info):
+        print('notify', info)
+
+class DownloadTasks(Tasks):
+    def __init__(self, mornitorpoint):
+        super().__init__('downloadtasks', mornitorpoint)
+
+    def list_task(self):
+        print('list_task', self.location)
+
+    def check_task(self):
+        print('check_task', self.location)
+
+    def notify(self, info):
+        print('notify', info)
+
 class Monitor:
     def __init__(self, mornitorpoint):
         self.mornitorpoint = mornitorpoint
+        self.taskset = []
+        self.taskset.append(TimerTasks(self.mornitorpoint))
+        self.taskset.append(BuildTasks(self.mornitorpoint))
+        self.taskset.append(DownloadTasks(self.mornitorpoint))
+
+    def run(self):
+        while True:
+            time.sleep(3)
+            #遍历任务集
+            for tasks in self.taskset:
+                #列出子任务集
+                tasks.list_task()
+
+                #检查子任务集中的任务
+                tasks.check_task()
+
+                #通知下一步动作
+                tasks.notify(tasks.name + ' completed')
+
 
     def download(self):
         pass
 
-    def timer(self):
+    def timertask(self):
         pass
 
-    def taskbuild(self):
+    def buildtask(self):
         mornitorpoint = self.mornitorpoint
-        buildtask = mornitorpoint + 'buildtask\\'
+        build_task = mornitorpoint + 'buildtask\\'
         downloadtask = mornitorpoint + 'download\\'
         status_file = 'okay.txt'
         notified = False
@@ -147,16 +223,17 @@ class Monitor:
             time.sleep(3)
             if mornitor.exists():
                 print(mornitorpoint, 'exsit')
-                build = Path(buildtask)
+                build = Path(build_task)
                 if build.exists():
                     print(build, 'exsit')
-                    status = Path(buildtask + status_file)
+                    status = Path(build_task + status_file)
                     if status.exists():
                         print(build, 'complete')
                         if notified == False:
-                            os.popen('notepad ' + buildtask + status_file)
+                            os.popen('notepad ' + build_task + status_file)
                             notified = True
 
 #test pass
 mMonitor = Monitor('G:\Workspaces\python\prjs\dir\mornitorpoint\\')
-mMonitor.taskbuild()
+#mMonitor.taskbuild()
+mMonitor.run()
