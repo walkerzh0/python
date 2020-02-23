@@ -128,60 +128,82 @@ class CmdManager:
 from pathlib import Path
 
 class Tasks:
-    def __init__(self, name, mornitorpoint):
+    def __init__(self, name, prename, mornitorpoint):
         self.name = name
+        self.prename = prename
         self.location = mornitorpoint + name
-        self.tasks = []
+        self.status_file = 'okay.txt'
+        self.tasks = []                         #任务中当前在线任务
+
+    def register_new_task(self):
+        ts = os.listdir(self.location)
+        for t in ts:
+            #检查&注册新任务
+            if t.find(self.prename) == 0:
+                if t in self.tasks:
+                    pass
+                else:
+                    self.tasks.append(t)
+                    print('new task: ', t, ' onlined')
 
     def list_task(self):
-        pass
+        ts = os.listdir(self.location)
+        for task in ts:
+            print(self.name, task)
+            if task.find(self.prename) == 0:
+                self.tasks.append(task)
+                print(task, 'is inited')
 
     def check_task(self):
-        pass
+        for task in self.tasks:
+            task_status = Path(self.location + '\\' + task +  '\\' + self.status_file)
+            if task_status.exists():
+                #print(self.location + '\\' + task + '\completed')
+                self.notify('please deal with task:' + self.name + '\\' + task)
 
     def notify(self, info):
-        pass
+        print(info)
 
 class TimerTasks(Tasks):
     def __init__(self, mornitorpoint):
-        super().__init__('timertasks', mornitorpoint)
+        super().__init__('timertasks', 'tm_', mornitorpoint)
 
-    def list_task(self):
-        print('list_task', self.location)
-
-    def check_task(self):
-        print('check_task', self.location)
-
-    def notify(self, info):
-        print('notify', info)
+    # def list_task(self):
+    #     print('list_task', self.location)
+    # 
+    # def check_task(self):
+    #     print('check_task', self.location)
+    # 
+    # def notify(self, info):
+    #     print('notify', info)
 
 
 class BuildTasks(Tasks):
     def __init__(self, mornitorpoint):
-        super().__init__('buildtasks', mornitorpoint)
+        super().__init__('buildtasks', 'bd_', mornitorpoint)
 
-    def list_task(self):
-        print('list_task', self.location)
-        #ts = os.listdir(self.location)
-
-    def check_task(self):
-        print('check_task', self.location)
-
-    def notify(self, info):
-        print('notify', info)
+    # def list_task(self):
+    #     print('list_task', self.location)
+    #     #ts = os.listdir(self.location)
+    # 
+    # def check_task(self):
+    #     print('check_task', self.location)
+    # 
+    # def notify(self, info):
+    #     print('notify', info)
 
 class DownloadTasks(Tasks):
     def __init__(self, mornitorpoint):
-        super().__init__('downloadtasks', mornitorpoint)
+        super().__init__('downloadtasks', 'dl_', mornitorpoint)
 
-    def list_task(self):
-        print('list_task', self.location)
-
-    def check_task(self):
-        print('check_task', self.location)
-
-    def notify(self, info):
-        print('notify', info)
+    # def list_task(self):
+    #     print('list_task', self.location)
+    # 
+    # def check_task(self):
+    #     print('check_task', self.location)
+    # 
+    # def notify(self, info):
+    #     print('notify', info)
 
 class Monitor:
     def __init__(self, mornitorpoint):
@@ -192,18 +214,22 @@ class Monitor:
         self.taskset.append(DownloadTasks(self.mornitorpoint))
 
     def run(self):
+        for tasks in self.taskset:
+            # 列出所有初始子任务集
+            tasks.list_task()
+
         while True:
             time.sleep(3)
             #遍历任务集
             for tasks in self.taskset:
-                #列出子任务集
-                tasks.list_task()
+                #注册新任务
+                tasks.register_new_task()
 
                 #检查子任务集中的任务
                 tasks.check_task()
 
                 #通知下一步动作
-                tasks.notify(tasks.name + ' completed')
+                #tasks.notify(tasks.name + ' completed')
 
 
     def download(self):
@@ -237,3 +263,20 @@ class Monitor:
 mMonitor = Monitor('G:\Workspaces\python\prjs\dir\mornitorpoint\\')
 #mMonitor.taskbuild()
 mMonitor.run()
+
+
+class TestObj:
+    def __init__(self):
+        pass
+
+    def test(self):
+        li = ['d1', 'd2', 'd3', 6]
+        target = 'd2'
+
+        if target in li:
+            print(target, 'is li a element')
+        else:
+            print(target, 'is not found')
+
+#mTestObj = TestObj()
+#mTestObj.test()
