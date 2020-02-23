@@ -2,44 +2,13 @@ import os
 import time
 import itools
 
-class LogTool:
-    log_top_path = "find /storage/sdcard0/"
-    logs = []
 
-    def __init__(self):
-        self.mOs = itools.Os()
-        self.logs_saved_path = " E:\oppo\logs"
-    def get_kernel_log(self):
-        result = self.mOs.popen('adb shell find /storage -name *kernel_log*')
-
-        #for line in result.read():         #此种读取方式，每次读一个字符
-            #cmd = "adb pull " + line + " E:\oppo\logs"
-            #self.mOs.popen(cmd)
-            #print('lkl', cmd, 'done')
-        idx = 0
-        for idx in range(4):
-            ret = result.readline()
-            cmd = "adb pull " #+ ret.strip() + " " + self.logs_saved_path   # 此句如果adb端口不在就会报错                                                        lf.logs_saved_path
-            self.mOs.popen(cmd)
-
-        self.open_dir(self.logs_saved_path)
-            #print(cmd)
-
-    def get_mobile_log(self):
-        pass
-
-    def open_dir(self, dir):
-        cmd = 'explorer ' + dir
-        self.mOs.popen(cmd)
-
-    def open_txtfile(self, file):
-        cmd = 'notepad ' + file
-        self.mOs.popen(cmd)
 
 class CmdObj:
     def __init__(self, cmdname):
         self.cmdname = cmdname
         self.cmdhelp = {}
+        self.Os = itools.Os()
     def parser(self, cmd_input):
         pass
     def handler(self):
@@ -91,16 +60,99 @@ class VersionCmdObj(CmdObj):
         print('cmd version used to copy version between logserver and compile server')
         # print()
 
+class LogCmdObj(CmdObj):
+    def __init__(self):
+        super().__init__('log')
+        self.logs_computer_path = "G:\Workspaces\python\prjs\dir\logs\\"
+        self.logs_phone_path = '/storage/emulated/0/oppo_log/'
+        self.issues = []
+        #列出当前issue_list
+        issue_list = os.listdir(self.logs_computer_path)
+        for issue in issue_list:
+            if issue.find('issue') != -1:
+                self.issues.append(issue)
+                print('logs:' + issue)
+
+        print('cmdname: ', self.cmdname)
+
+    def parser(self, cmd_input):
+        print(cmd_input)
+        self.actione = ''
+        if cmd_input.find(' -k') != -1:
+            self.actione = '-k'
+        elif cmd_input.find(' -m') != -1:
+            self.actione = '-m'
+        elif cmd_input.find(' -a') != -1:
+            self.actione = '-a'
+        else:
+            pass
+
+        #select target dir
+        self.list_issues()
+        self.target_dir = ''
+        target_idx = input('选择target issue idx:')
+        target_postfix = input('log详细信息')
+        self.target_dir = self.logs_computer_path  + self.issues[int(target_idx)] + '\\' + target_postfix + '\\'
+        os.popen('md ' + self.target_dir)
+        print(self.target_dir)
+
+
+    def handler(self):
+        print('handler......')
+
+
+        print(self.actione)
+        self.exec_cmd = ''
+        if self.actione == '-k':
+            adb_kernels = os.popen('adb shell find /storage -name *kernel_log*')
+            print(adb_kernels)
+            idx = 0
+            while True:
+                kernel_log_line = adb_kernels.readline()
+                #print(kernel_log_line)
+
+                self.exec_cmd = "adb pull " + kernel_log_line.strip() + " " + self.target_dir
+                self.Os.popen(self.exec_cmd)
+
+                if kernel_log_line.strip() == '':
+                    print('kernel log获取结束')
+                    self.Os.popen('explorer ' + self.target_dir)
+                    break
+
+    def list_issues(self):
+        #print issues
+        len = self.issues.__len__()
+        print('issue len:', len)
+        for idx in range(len):
+            print(self.issues[idx])
+
+        #select will save dir
+
+
+
+    def help(self):
+        print(self.cmdname + 'helpinfo:')
+
+
 class CmdManager:
     def __init__(self):
         self.itwalk_cmdlist = ['version', 'log', 'rtcbug', 'patch', 'feature', 'issue', 'helper']
         self.cmd_obj_list =[]
         self.cmd_obj_list.append(VersionCmdObj())
+        self.cmd_obj_list.append(LogCmdObj())
 
-    def handler(self, cmdname):
+    def handler(self, cmd_input):
+        #检查命令合法性
+        def_cmd = ''
+        for def_cmd in self.itwalk_cmdlist:
+            if cmd_input.find(def_cmd) != -1:
+                break
+            else:
+                pass
+
         for cmd_obj in self.cmd_obj_list:
-            if cmdname == cmd_obj.cmdname:
-                cmd_obj.parser(cmdname)
+            if def_cmd == cmd_obj.cmdname:
+                cmd_obj.parser(cmd_input)
                 cmd_obj.handler()
 
     def helper(self):
@@ -108,42 +160,29 @@ class CmdManager:
             print(cmd)
 
 # test pass
-#mCmdManager = CmdManager()
-#cmd_input = input('请输入命令：')
-#mCmdManager.handler(cmd_input)
+mCmdManager = CmdManager()
+cmd_input = input('请输入命令：')
+mCmdManager.handler(cmd_input)
 
-# test pass
-# logtool = LogTool()
-# logtool.get_kernel_log()
-
-
-# mLogTool = LogTool()
-# mLogTool.get_kernel_log()
-# path = 'G:\Workspaces\python\prjs\\'
-# filename = 'LogInfo.txt'
-
-# mLogTool.open_txtfile(path + filename)
-# mLogTool.open_dir(path)
 
 from pathlib import Path
-
 class Tasks:
     def __init__(self, name, prename, mornitorpoint):
         self.name = name
         self.prename = prename
         self.location = mornitorpoint + name
         self.status_file = 'okay.txt'
-        self.tasks = []                         #任务中当前在线任务
+        self.online_tasks = []                         #任务中当前在线任务
 
     def register_new_task(self):
         ts = os.listdir(self.location)
         for t in ts:
             #检查&注册新任务
             if t.find(self.prename) == 0:
-                if t in self.tasks:
+                if t in self.online_tasks:
                     pass
                 else:
-                    self.tasks.append(t)
+                    self.online_tasks.append(t)
                     print('new task: ', t, ' onlined')
 
     def list_task(self):
@@ -151,11 +190,11 @@ class Tasks:
         for task in ts:
             print(self.name, task)
             if task.find(self.prename) == 0:
-                self.tasks.append(task)
+                self.online_tasks.append(task)
                 print(task, 'is inited')
 
     def check_task(self):
-        for task in self.tasks:
+        for task in self.online_tasks:
             task_status = Path(self.location + '\\' + task +  '\\' + self.status_file)
             if task_status.exists():
                 #print(self.location + '\\' + task + '\completed')
@@ -231,52 +270,7 @@ class Monitor:
                 #通知下一步动作
                 #tasks.notify(tasks.name + ' completed')
 
-
-    def download(self):
-        pass
-
-    def timertask(self):
-        pass
-
-    def buildtask(self):
-        mornitorpoint = self.mornitorpoint
-        build_task = mornitorpoint + 'buildtask\\'
-        downloadtask = mornitorpoint + 'download\\'
-        status_file = 'okay.txt'
-        notified = False
-        mornitor = Path(mornitorpoint)
-        while True:
-            time.sleep(3)
-            if mornitor.exists():
-                print(mornitorpoint, 'exsit')
-                build = Path(build_task)
-                if build.exists():
-                    print(build, 'exsit')
-                    status = Path(build_task + status_file)
-                    if status.exists():
-                        print(build, 'complete')
-                        if notified == False:
-                            os.popen('notepad ' + build_task + status_file)
-                            notified = True
-
 #test pass
-mMonitor = Monitor('G:\Workspaces\python\prjs\dir\mornitorpoint\\')
-#mMonitor.taskbuild()
-mMonitor.run()
+#mMonitor = Monitor('G:\Workspaces\python\prjs\dir\mornitorpoint\\')
+#mMonitor.run()
 
-
-class TestObj:
-    def __init__(self):
-        pass
-
-    def test(self):
-        li = ['d1', 'd2', 'd3', 6]
-        target = 'd2'
-
-        if target in li:
-            print(target, 'is li a element')
-        else:
-            print(target, 'is not found')
-
-#mTestObj = TestObj()
-#mTestObj.test()
