@@ -2,8 +2,6 @@ import os
 import time
 import itools
 
-
-
 class CmdObj:
     def __init__(self, cmdname):
         self.cmdname = cmdname
@@ -160,9 +158,9 @@ class CmdManager:
             print(cmd)
 
 # test pass
-mCmdManager = CmdManager()
-cmd_input = input('请输入命令：')
-mCmdManager.handler(cmd_input)
+# mCmdManager = CmdManager()
+# cmd_input = input('请输入命令：')
+# mCmdManager.handler(cmd_input)
 
 
 from pathlib import Path
@@ -197,8 +195,9 @@ class Tasks:
         for task in self.online_tasks:
             task_status = Path(self.location + '\\' + task +  '\\' + self.status_file)
             if task_status.exists():
-                #print(self.location + '\\' + task + '\completed')
-                self.notify('please deal with task:' + self.name + '\\' + task)
+                # print(self.location + '\\' + task + '\completed')
+                # self.notify('please deal with task:' + self.name + '\\' + task)
+                self.notify(self.location + '\\' + task + '\\')
 
     def notify(self, info):
         print(info)
@@ -220,6 +219,9 @@ class TimerTasks(Tasks):
 class BuildTasks(Tasks):
     def __init__(self, mornitorpoint):
         super().__init__('buildtasks', 'bd_', mornitorpoint)
+        self.info_file = "completeinfo.txt"
+        self.notify_file = '版本修改及验证说明.txt'
+        self.notifyflag_file = 'notify complete.txt'
 
     # def list_task(self):
     #     print('list_task', self.location)
@@ -228,8 +230,48 @@ class BuildTasks(Tasks):
     # def check_task(self):
     #     print('check_task', self.location)
     # 
-    # def notify(self, info):
-    #     print('notify', info)
+    def notify(self, taskpath):
+        # print('BuildTask complete', taskpath)
+
+        flag_file = Path(taskpath + '\\' + self.notifyflag_file)
+        if flag_file.exists():
+            pass
+        else:
+            # read completeinfo.txt
+            info_file = taskpath + self.info_file
+            info = ''
+            infofile = Path(info_file)
+            if infofile.exists():
+                finfo = open(info_file, 'r')
+                info = finfo.read()
+                finfo.close()
+
+                # deal and write info into notify file
+                finfo = open(taskpath + self.notify_file, 'w')
+                print('info is ' + info)
+                finfo.write(info)
+                finfo.write("\n")
+                finfo.write("\n")
+                finfo.write("\n")
+                finfo.write('修改点: ')
+                finfo.write("\n")
+                finfo.write("\n")
+                finfo.write("\n")
+                finfo.write('修改目的: ')
+                finfo.write("\n")
+                finfo.write("\n")
+                finfo.write("\n")
+                finfo.close()
+
+                # notify user and create flag file
+                os.popen('notepad ' + taskpath + self.notify_file)
+                open(taskpath + self.notifyflag_file, 'w+').close()
+
+
+
+
+
+
 
 class DownloadTasks(Tasks):
     def __init__(self, mornitorpoint):
@@ -271,6 +313,6 @@ class Monitor:
                 #tasks.notify(tasks.name + ' completed')
 
 #test pass
-#mMonitor = Monitor('G:\Workspaces\python\prjs\dir\mornitorpoint\\')
-#mMonitor.run()
+mMonitor = Monitor('G:\Workspaces\python\prjs\dir\mornitorpoint\\')
+mMonitor.run()
 
