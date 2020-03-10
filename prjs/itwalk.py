@@ -1,6 +1,7 @@
 import os
 import time
 import itools
+from pathlib import Path    #用于检测文件或目录是否存在
 
 class CmdObj:
     def __init__(self, cmdname):
@@ -62,7 +63,7 @@ class LogCmdObj(CmdObj):
     def __init__(self):
         super().__init__('log')
         self.logs_computer_path = "G:\Workspaces\python\prjs\dir\logs\\"
-        self.logs_phone_path = '/storage/emulated/0/oppo_log/'
+        self.logs_phone_path = '/storage/emulated/0/xxx_log/'
         self.issues = []
         #列出当前issue_list
         issue_list = os.listdir(self.logs_computer_path)
@@ -131,7 +132,6 @@ class LogCmdObj(CmdObj):
     def help(self):
         print(self.cmdname + 'helpinfo:')
 
-
 class CmdManager:
     def __init__(self):
         self.itwalk_cmdlist = ['version', 'log', 'rtcbug', 'patch', 'feature', 'issue', 'helper']
@@ -163,7 +163,7 @@ class CmdManager:
 # mCmdManager.handler(cmd_input)
 
 
-from pathlib import Path
+
 class Tasks:
     def __init__(self, name, prename, mornitorpoint):
         self.name = name
@@ -197,7 +197,11 @@ class Tasks:
             if task_status.exists():
                 # print(self.location + '\\' + task + '\completed')
                 # self.notify('please deal with task:' + self.name + '\\' + task)
-                self.notify(self.location + '\\' + task + '\\')
+                self.handler(self.location + '\\' + task + '\\')
+                #self.notify(self.location + '\\' + task + '\\')
+
+    def handler(self, info):
+        print('Tasks handler ' + info + '......')
 
     def notify(self, info):
         print(info)
@@ -215,7 +219,6 @@ class TimerTasks(Tasks):
     # def notify(self, info):
     #     print('notify', info)
 
-
 class BuildTasks(Tasks):
     def __init__(self, mornitorpoint):
         super().__init__('buildtasks', 'bd_', mornitorpoint)
@@ -229,7 +232,11 @@ class BuildTasks(Tasks):
     # 
     # def check_task(self):
     #     print('check_task', self.location)
-    # 
+    #
+
+    def handler(self, taskpath):
+        self.notify(taskpath)
+
     def notify(self, taskpath):
         # print('BuildTask complete', taskpath)
 
@@ -249,29 +256,14 @@ class BuildTasks(Tasks):
                 # deal and write info into notify file
                 finfo = open(taskpath + self.notify_file, 'w')
                 print('info is ' + info)
+                info = info + ' \n'*5 + '修改点: ' +  ' \n'*5 + '修改目的: ' + '\n'*5
+                # print('finnal info is *******' + info)
                 finfo.write(info)
-                finfo.write("\n")
-                finfo.write("\n")
-                finfo.write("\n")
-                finfo.write('修改点: ')
-                finfo.write("\n")
-                finfo.write("\n")
-                finfo.write("\n")
-                finfo.write('修改目的: ')
-                finfo.write("\n")
-                finfo.write("\n")
-                finfo.write("\n")
                 finfo.close()
 
                 # notify user and create flag file
                 os.popen('notepad ' + taskpath + self.notify_file)
                 open(taskpath + self.notifyflag_file, 'w+').close()
-
-
-
-
-
-
 
 class DownloadTasks(Tasks):
     def __init__(self, mornitorpoint):
@@ -282,9 +274,12 @@ class DownloadTasks(Tasks):
     # 
     # def check_task(self):
     #     print('check_task', self.location)
-    # 
-    # def notify(self, info):
-    #     print('notify', info)
+
+    def handler(self, taskpath):
+        self.notify(taskpath)
+
+    def notify(self, taskpath):
+        print('download ' + taskpath + ' complete')
 
 class Monitor:
     def __init__(self, mornitorpoint):
@@ -303,14 +298,11 @@ class Monitor:
             time.sleep(3)
             #遍历任务集
             for tasks in self.taskset:
-                #注册新任务
+                #子任务集注册新任务
                 tasks.register_new_task()
 
-                #检查子任务集中的任务
+                #子任务集中任务检查
                 tasks.check_task()
-
-                #通知下一步动作
-                #tasks.notify(tasks.name + ' completed')
 
 #test pass
 mMonitor = Monitor('G:\Workspaces\python\prjs\dir\mornitorpoint\\')
