@@ -225,6 +225,7 @@ class BuildTasks(Tasks):
         self.info_file = "completeinfo.txt"
         self.notify_file = '版本修改及验证说明.txt'
         self.notifyflag_file = 'notify complete.txt'
+        self.outdir = 'out\\target\product\\' + 'platform_x\\'
 
     # def list_task(self):
     #     print('list_task', self.location)
@@ -235,35 +236,42 @@ class BuildTasks(Tasks):
     #
 
     def handler(self, taskpath):
-        self.notify(taskpath)
-
-    def notify(self, taskpath):
         # print('BuildTask complete', taskpath)
-
         flag_file = Path(taskpath + '\\' + self.notifyflag_file)
-        if flag_file.exists():
+        if flag_file.exists():      # 已通知过用户
             pass
-        else:
+        else:                       # 处理任务，并通知用户
             # read completeinfo.txt
             info_file = taskpath + self.info_file
             info = ''
-            infofile = Path(info_file)
-            if infofile.exists():
+            if Path(info_file).exists():
                 finfo = open(info_file, 'r')
                 info = finfo.read()
                 finfo.close()
 
                 # deal and write info into notify file
-                finfo = open(taskpath + self.notify_file, 'w')
-                print('info is ' + info)
-                info = info + ' \n'*5 + '修改点: ' +  ' \n'*5 + '修改目的: ' + '\n'*5
-                # print('finnal info is *******' + info)
+                info = info + ' \n' * 5 + '修改点: ' + ' \n' * 5
+
+                #parser and copy version to target dir
+                #print(info.find('out'))  # 返回目标字符串的索引
+                tmpstr = info.split('\n')
+                srcdir = (tmpstr[0].split(' '))[1]
+                dstdir = tmpstr[2].split(' ')[1]
+
+                cmd_cpboot = 'copy ' + srcdir + '\\' + self.outdir + 'boot.img ' + dstdir
+                cmd_cpdtbo = 'copy ' + srcdir + '\\' + self.outdir + 'dtbo.img ' + dstdir
+                os.popen(cmd_cpboot)
+                os.popen(cmd_cpdtbo)
+
+                finfo = open(dstdir + '\\' + self.notify_file, 'w+')
                 finfo.write(info)
                 finfo.close()
-
-                # notify user and create flag file
-                os.popen('notepad ' + taskpath + self.notify_file)
                 open(taskpath + self.notifyflag_file, 'w+').close()
+                self.notify(dstdir)
+
+    def notify(self, dstdir):
+            notify_file = dstdir + '\\' + self.notify_file
+            os.popen('notepad ' + notify_file)
 
 class DownloadTasks(Tasks):
     def __init__(self, mornitorpoint):
