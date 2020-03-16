@@ -1,0 +1,4 @@
+<taskinfo taskname="buindtask">
+	<workpath key="workpath">G:\Workspaces\python\prjs\dir\mornitorpoint\buildtasks</workpath>
+	<outpath key="outpath">G:\Workspaces\python\prjs\dir\logserver</outpath>
+</taskinfo>

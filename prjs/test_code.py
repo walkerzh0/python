@@ -11,14 +11,8 @@ class TestObj:
         else:
             print(target, 'is not found')
 
-mTestObj = TestObj()
-mTestObj.test()
-
-
-
-
-
-
+# mTestObj = TestObj()
+# mTestObj.test()
 
 
 class LogTool:
@@ -69,3 +63,42 @@ class LogTool:
 
 # mLogTool.open_txtfile(path + filename)
 # mLogTool.open_dir(path)
+
+
+
+#from xml.sax import make_parser
+#parser = make_parser()
+#print('xml sax is ok')
+
+from xml.sax.handler import ContentHandler
+from xml.sax import parse
+
+class TaskInfoHandler(ContentHandler):
+    def __init__(self, taskinfo):
+        super().__init__()
+        self.data = {}
+        self.key = []
+        self.value = ''
+        self.taskinfo = taskinfo
+
+    def startElement(self, name, attrs):
+        # self.data
+        self.keyvalues = attrs.values()
+        # print(self.key)
+        # print(name, attrs.keys())
+
+    def characters(self, content):
+        self.value = content
+        # print('cont: ' + content)
+
+    def endElement(self, name):
+        keytext = ''.join(self.keyvalues)
+        self.taskinfo[keytext] = self.value
+        # print(keytext + ': ' + self.value)
+        self.keyvalues = []
+        self.value = ''
+
+# test pass
+taskinfo = {}
+parse('G:\Workspaces\python\prjs\dir\\taskinfo.xml', TaskInfoHandler(taskinfo))
+print(taskinfo)
