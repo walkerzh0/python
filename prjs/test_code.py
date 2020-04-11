@@ -102,3 +102,287 @@ class TaskInfoHandler(ContentHandler):
 taskinfo = {}
 parse('G:\Workspaces\python\prjs\dir\\taskinfo.xml', TaskInfoHandler(taskinfo))
 print(taskinfo)
+
+
+print("三引号：")
+print('''I'm a student, and my name is "hello world"''')
+
+print("原始字符串")
+print(r'''I'm so sorry !!! "current path is C:\nowposation"''')
+
+print("unicode编码")
+print('\u00c6')
+print("\N{Cat}")
+print("\N{Dog}")
+
+print('列表操作')
+print('列表元素访问:切片 && 索引 && 步长')
+l = 'Hello'
+print('l[0] = ', l[0])
+print('l[-1] = ', l[-1])
+print('l[0:2]', l[0:2])
+print('l[-3:-2]', l[-3:-2])
+print('l[-3:-1]', l[-3:-1])
+print('l[1:-1]', l[1:-1])
+print('l[1:5]', l[1:5])
+print('步长与简写')
+print('l[0:4:2]', l[0:4:2])
+print('l[::4]', l[::4])
+print('l[4::-2]', l[4::-2]) #步长为负数时候，左边索引需要比右边索引大
+print('l[:2:-2]', l[:2:-2]) #步长为负数时候，左边索引需要比右边索引大
+
+print('列表初始化：*代替循环')
+print([0] * 10)
+print([1] * 10)
+print([None] * 10)
+
+print('检查序列中是否存在某元素: in运算符')
+print('l' in l)
+print('x' in l)
+print('llo' in l) #in运算符可以检查子字符串
+
+print('列表操作：赋值 && 删除 && 切片修改')
+data = [1, 3, 5, 2, 5]
+str = list('HelloWorld')
+print('data is ', data)
+print('str is ', str)
+del data[2]
+print('data is ', data)
+del data[1:3]
+print('data is ', data)
+data[1:] = [4, 5, 6, 9]
+print('data is ', data)
+str[-1] = ['d', ' ', 'python']
+print('str is ', str)
+print(''.join(''.join(str[-1])))
+str[-1] = ['d python']
+print('str is ', str)
+str[-1] = 'd python'
+print('str is ', str)
+print(''.join(str))
+
+print('list 关函数：copy && ')
+print(str)
+str1 = str.copy()
+print(str1)
+str1[0] = 'A'
+print(str)
+print(str1)
+
+str2 = str1[:]
+print('str2 is', str2)
+str2[0] = 'BB'
+print('str1 is', str1)
+print('str2 is', str2)
+
+print('data is ', data)
+data1 = list(data)
+print('data1 is ', data1)
+data1[1] = 99
+print('data is ', data)
+print('data1 is ', data1)
+data1[2] = [3, 4, 2]
+print('data1 is ', data1)
+print('data1.index([3, 4, 2]) is ', data1.index([3, 4, 2]))
+
+print('利用pop && append函数实现栈和队列')
+list_st = []
+for idx in range(10):
+    list_st.append(idx)
+    print(list_st)
+for idx in range(10):
+    list_st.pop()
+    print(list_st)
+
+print('function remove')
+data1.clear()
+#data1 = []
+#data1[:] = []
+print('data1 is ', data1)
+data1 = ['is ', 'has', 'am', 'do', 'to']
+data1.remove('has')
+print('data1 is ', data1)
+data1.reverse()
+print('data1 is ', data1)
+
+
+print('字符串格式方法format的三种使用方法')
+format = '%s and %s is our tl and pm'
+value = ('leader ge', 'boss huang')
+print(format % value)
+
+print('{} and {} is my teacher'.format('段老师', '陈老师'))
+print('{teacher} and {student} is talking...'.format(teacher="黄磊", student='赵薇'))
+print('{1} and {1} is talking...'.format('黄磊', '赵薇'))
+print('{} and {} is data'.format([1, 2, 3], (3, 6)))
+
+print('字符串格式控制符')
+print('data b is {data:f}'.format(data=1327))
+print('data d is {data:d}'.format(data=1327))
+print('data x is {data:x}'.format(data=1327))
+print('data o is {data:o}'.format(data=1327))
+
+width = 35
+price_width = 10
+item_width = width - price_width
+header_fmt = '{{:{}}}{{:>{}}}'.format(item_width, price_width)
+fmt = '{{:{}}}{{:>{}.2f}}'.format(item_width, price_width)
+print(header_fmt)
+print(fmt)
+
+print('字符串方法')
+str = 'This is is a people'
+str1 = str.replace('is', 'eez')
+print(str1)
+
+print('字典及使用：dict, clear, keys, values, update, pop, get, items')
+l = [('name', 'name1'), ('age', 23), (34, 'midle')]
+l2 = [('name', 'name2'), ('age', 8000)]
+d = dict(l)
+d2 = dict(l2)
+print(d)
+print(d.keys())
+print(d.values())
+d.update(d2)
+print(d)
+print(d.items()) #将字典中的键值对转换成列表，列表元素为元组
+info = 'My info is Name:{name} and Age:{age}'.format_map(d2)
+print(info)
+
+print('python函数特有的参数特性:定义参数收集 && 调用参数分配')
+def f(x, *parma):
+    print(x, parma)
+def f2(x, *parma_t, **param_d):
+    print(x, parma_t, param_d)
+def f3(x, *parma_t, y, z, **param_d):
+    print(x, parma_t, y, z, param_d)
+
+f(1, 2, 'hello', 5, 'world')
+f2(34, 1242, 'H1N1', y = 'AK', z = 'AKM')
+f3(1, 'e', 3, 5, 8, 9, 70, z = 37, id = '384', name='x_company', y = 77)    #定义的是位置参数，调用的时候可以指定为关键字参数
+
+def f4(x, y, z, m = 3, n = 4):
+    print(x, y, z, m + n)
+
+param_t = (1, 2, 3)
+param_d = {'n':8, 'm':9}
+f4(*param_t, **param_d)
+param = (5, ) * 2
+print(param)
+
+print('面向对象:多重继承 && 抽象基类')
+class Animal:
+    def sport(self):
+        print('Animal sport...')
+
+class People:
+    def sport(self):
+        print('People sport...')
+
+    def work(self):
+        print('work...')
+
+    def talk(self):
+        print('People talk....')
+
+class Student(Animal, People):
+    pass
+
+class Teacher(People, Animal):
+    pass
+
+Student().sport()
+Teacher().sport()
+
+st = Student()
+tea = Teacher()
+
+print(hasattr(st, 'talk'))
+print(hasattr(st, 'talk1'))
+
+print(callable(getattr(tea, 'sport')))
+print(callable(getattr(tea, 'talk')))
+
+from abc import ABC, abstractmethod
+class BusInterface:
+    @abstractmethod
+    def communicat(self):
+        pass
+
+class UsbInterface(BusInterface):
+    def communicat(self):
+        print('usb communicating...')
+
+UsbInterface().communicat()
+
+print('魔法方法，列表协议，list,dict,str的子类派生实现征需求,迭代器，生成器')
+print('列表映射协议')
+class MyList:
+    def checkkey(self, key):
+        if isinstance(key, int):
+            return True
+        else:
+            return False
+
+    def __init__(self, start, step):
+        self.start = start
+        self.step = step
+        self.len = 1
+        self.changed = {}
+    def __len__(self):
+        return self.len
+
+    def __setitem__(self, key, value):
+        if self.checkkey(key):
+            self.changed[key] = value
+        else:
+            print('__setitem__ key is invalid')
+
+    def __getitem__(self, key):
+        if self.checkkey(key):
+            #if self.changed[key]:
+                #print('data has changed, now is ', self.changed[key])
+            #else:
+            print('start key step is ', self.start, key, self.step)
+            print(self.start + key * self.step)
+            return self.start + key * self.step
+        else:
+            print('__getitem__ key is invalid')
+
+mylist = MyList(1, 1)
+mylist[1] = 2
+mylist[4] = 8
+print('mylist[4], mylist[20] is ', mylist[4], mylist[20])
+
+print('迭代器的两种使用方法')
+
+print('生成器yield和return区别')
+class TestUnit:
+    def __init__(self):
+        self.listdata = [[93, 9, 3], [7, 24], [6]]
+
+    def testYield(self):                #step exec
+        for sublist in self.listdata:
+            for element in sublist:
+                yield element           #iter
+
+    def testFunc(self):                 #next exec
+        for sublist in self.listdata:
+            for element in sublist:
+                return element
+print('testFunc 不可迭代：next exec')
+ret = TestUnit().testFunc()
+print('testFunc:item is ', ret)
+print('testFunc:item is ', ret)
+print('testFunc:item is ', ret)
+print('testFunc:item is ', ret)
+print('testFunc:item is ', ret)
+print('testFunc:item is ', ret)
+print('testYield可以迭代：step exec')
+testIter = TestUnit().testYield()
+print('testYield:item is ', testIter.__next__())
+print('testYield:item is ', testIter.__next__())
+print('testYield:item is ', testIter.__next__())
+print('testYield:item is ', testIter.__next__())
+print('testYield:item is ', testIter.__next__())
+print('testYield:item is ', testIter.__next__())
