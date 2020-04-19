@@ -386,3 +386,106 @@ print('testYield:item is ', testIter.__next__())
 print('testYield:item is ', testIter.__next__())
 print('testYield:item is ', testIter.__next__())
 print('testYield:item is ', testIter.__next__())
+
+import re
+print("正则表达式 * + ?")
+ret = re.match('.*ython', '——     python')
+print('.*ython', ret.group())
+ret = re.match('.+ython', '——     python')
+print('.+ython', ret.group())
+ret = re.match('p?ython', 'python')
+print('p?ython', ret.group())
+ret = re.match('p?ython', 'ython')
+print('p?ython', ret.group())
+#ret = re.match('p?ython', 'xython') #返回None
+#print('p?ython', ret.group()) #会报错AttributeError: 'NoneType' object has no attribute 'group'
+
+print('正则表达式 * {} [] 原始字符r')
+ret = re.match(r'w*.python.org', 'ww.python.orghahah')
+print('w*.python.org', ret.group())
+
+ret = re.match(r'w{3}.python.org', 'www.python.orghahah')
+print('w{3}.python.org', ret.group())
+
+ret = re.match(r'w{3,}.python.org', 'wwww.python.orghahah')
+print('w{3,}.python.org', ret.group())
+
+ret = re.match(r'w{3,10}.python.org', 'wwww.python.orghahah')
+print('w{3,10}.python.org', ret.group())
+
+ret = re.match(r'w{3,10}.python.org', 'wwwwxpythonxorghahah')
+print('w{3,10}.python.org', ret.group())
+
+ret = re.match(r'w{3,10}\.python\.org', 'wwww.python.orghahah')
+print('w{3,10}\.python\.org', ret.group())
+
+ret = re.match(r'[a-zA-Z_]*\.python\.org', 'www_w.python.orghahah')
+print('[a-zA-Z_]*\.python\.org', ret.group())
+
+ret = re.match(r'[a-zA-Z_]*\.python\.org$', 'www_w.python.org')     #不会报错
+print('[a-zA-Z_]*\.python\.org$', ret.group())
+
+#ret = re.match(r'[a-zA-Z_]*\.python\.org$', 'www_w.python.orgXXX') #返回None
+#print('[a-zA-Z_]*\.python\.org$', ret.group()) #因为有$表示结束，现在后面以XXX结尾，会报错AttributeError: 'NoneType' object has no attribute 'group'
+
+print('''正则表达式转义字符:特使字符\. \d \w \s '\\n' \D \W \S等''')
+ret = re.match(r'[a-zA-Z_]*\.python[\d]\.org$', 'www.python3.org')     #不会报错
+print('[a-zA-Z_]*\.python[\d]\.org$', ret.group())
+
+#ret = re.match(r'[a-zA-Z_]*\.python[\d]\.org$', 'www.pythonx.org')     #匹配失败
+#print('[a-zA-Z_]*\.python[\d]\.org$', ret.group())
+
+ret = re.match(r'[a-zA-Z_]*\.python[\D]\.org$', 'www.python&.org')     #匹配非数字
+print('[a-zA-Z_]*\.python[\D]\.org$', ret.group())
+
+
+ret = re.match(r'[a-zA-Z_]*\.python[\W]\.org', '_www.python&.orgas')     #匹配非数字
+print('[a-zA-Z_]*\.python[\W]\.org', ret.group())
+
+#ret = re.match(r'[a-zA-Z_]*\.python[\w]\.org', '_www.python&.orgas')     #匹配失败，&不属于单词字符
+#print('[a-zA-Z_]*\.python[\w]\.org', ret.group())
+
+
+ret = re.match(r'[a-zA-Z_]*\.python[\s]\.org', '_www.python .orgas')     #\s匹配空格 制表符 换行\n
+print('[a-zA-Z_]*\.python[\s]\.org', ret.group())
+
+print('正则表达式：| 与分组匹配')
+ret = re.match(r'[a-zA-Z_]*\.python[\s]*\.org', '_www.python    .orgas')     #匹配多次
+print('[a-zA-Z_]*\.python[\s]*\.org', ret.group())
+
+ret = re.match(r'([a-zA-Z0-9]*)(@)(qq|163|162)(\.com$)', 'test@162.com')
+print(ret)
+print('[a-zA-Z0-9]*@(qq|163|162)\.com$', ret.group())
+print('[a-zA-Z0-9]*@(qq|163|162)\.com$', ret.group(1))
+print('[a-zA-Z0-9]*@(qq|163|162)\.com$', ret.group(2))
+print('[a-zA-Z0-9]*@(qq|163|162)\.com$', ret.groups())
+
+print('正则表达式diff match and search')
+ret = re.search(r'email:\w*@(qq|gmail|163|162)\.com', 'info email:28463@gmail.com') # 搜索匹配，只要字符串中有符合特征的字符串就返回
+print('search:', ret)
+print('search', ret.group())
+
+#ret = re.match(r'email:\w*@(qq|gmail|163|162)\.com', 'info email:28463@gmail.com') # 从开始匹配，所以匹配失败
+#print('match:', ret)
+#print('search', ret.group())
+
+print('正则表达式：findall sub split')
+ret = re.findall(r',\d*', ',999, c++ = 2342 php = 2342 python = ,9000')
+print(ret)
+
+ret = re.findall(r',\d*', ',999, php = 2342 python = ,9000')
+print(ret)
+
+data = '347'
+ret = re.sub(r'\d+', data, 'cpython user cont = 27349')
+print('re.sub ret is ', ret)
+
+ret = re.split(r':| ', 'cpython:user cont = 27349')
+print('re.split ret is ', ret)
+
+print('贪婪和非贪婪模式')
+ret = re.match(r'(.+?)\d+', 'cpython user cont = 27349')    #数量词+{m, n}后面加?   ->  非贪婪模式：尽可能少的匹配
+print('re.match ret is ', ret.groups(1))
+
+ret = re.match(r'(.+)\d+', 'cpython user cont = 27349')     #默认：贪婪模式
+print('re.match ret is ', ret.groups(1))
